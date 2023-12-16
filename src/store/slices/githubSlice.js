@@ -1,9 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const fetchUsers = createAsyncThunk('github/fetchUsers', async () => {
+export const fetchUsers = createAsyncThunk('github/fetchUsers', async (query) => {
   const numOfResults = 10; // Define the numOfResults variable
-  const query = 'souad'; // Define the query variable
   const response = await axios.get(`https://api.github.com/search/users?q=${query}&per_page=${numOfResults}`); // Use template literal for string interpolation
   return response.data;
 });
