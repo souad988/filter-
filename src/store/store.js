@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import greetingsReducer from './slices/greetingsSlice';
+import githubReducer from './slices/githubSlice';
 
 const store = configureStore({
   reducer: {
-    greetings: greetingsReducer,
+    github: githubReducer,
   },
 });
 

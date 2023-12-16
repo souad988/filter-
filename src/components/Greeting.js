@@ -1,21 +1,31 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchRandomGreeting } from '../store/slices/greetingsSlice';
+import { fetchUsers } from '../store/slices/githubSlice';
 
 function Greeting() {
   const dispatch = useDispatch();
-  const { greeting, status } = useSelector((state) => state.greetings);
+  const { users } = useSelector((state) => state.github);
+  const [username, setUsername] = useState('');
 
   useEffect(() => {
-    if (status === 'idle') {
-      dispatch(fetchRandomGreeting());
-    }
-  }, [status, dispatch]);
+    console.log(users);
+  }, [users]);
+
+  const handleChange = (e) => {
+    setUsername(e.target.value);
+    dispatch(fetchUsers(username));
+  };
 
   return (
     <div>
-      <h1>Random Greeting:</h1>
-      <p>{greeting.content}</p>
+      <input type="text" name="username" value={username} onChange={(e) => handleChange(e)} />
+      <h1>Github Users</h1>
+      {users && users.items.map((user) => (
+        <div key={user.id}>
+          <h2>{user.login}</h2>
+          <img src={user.avatar_url} alt={user.login} />
+        </div>
+      ))}
     </div>
   );
 }
